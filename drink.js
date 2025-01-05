@@ -12,32 +12,30 @@ const displayItem = (items) => {
 
     let allItems = Object.values(items);
     allItems.forEach(item => {
-    //console.log(item);
-        
-    item.forEach(element => {
-        const div = document.createElement("div");
-        div.classList.add("card");
-                
-        //console.log(element);
+        //console.log(item);
 
-        div.innerHTML = `
-        <img class="card-img" src=${element.strDrinkThumb} alt=""/>
-        <h4>Name: ${element.strDrink}</h4>
-        <h6>Category: ${element.strCategory}</h6>
-        <p>Instructions: ${element.strInstructions.slice(0,15)}...</p>
+        item.forEach(element => {
+            const div = document.createElement("div");
 
-        <div>
-            <button onclick="handleAddToCart('${element.idDrink}', '${element?.strDrink}')">Add to cart</button>
-            <button>Details</button>
-        </div>
-        `;
-        itemContainer.appendChild(div);
+            //console.log(element);
+            div.innerHTML = `
+            <img class="card-img" src=${element.strDrinkThumb} alt=""/>
+            <h4>Name: ${element.strDrink}</h4>
+            <h6>Category: ${element.strCategory}</h6>
+            <p>Instructions: ${element.strInstructions.slice(0, 15)}...</p>
+
+            <div>
+                <button onclick="handleAddToCart('${element.idDrink}', '${element?.strDrink}')">Add to cart</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getSingleItem('${element.idDrink}')">Details</button>
+            </div>
+            `;
+            itemContainer.appendChild(div);
         });
     });
-}
+};
 
-const handleAddToCart = (id,name) =>{
-    //console.log(id,name);
+const handleAddToCart = (id, name) => {
+    //console.log(id, name);
     const container = document.getElementById("cart-items");
 
     const div = document.createElement("div");
@@ -49,6 +47,53 @@ const handleAddToCart = (id,name) =>{
         <h5>${name}</h5>
     `;
     container.appendChild(div)
+};
+
+const searchItem = () => {
+    
+    const url = ``;
+
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+        if (data.length == 0){
+            showError();
+        }
+    else{
+        showSearchResult(data);
+    }
+    });
+}
+//------------------------------------------------------------------------------------------
+
+const getSingleItem = (id) => {
+    console.log(id);
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then((res) => res.json())
+        .then((json) => showDetail(json));
+};
+
+const showDetail = (item) => {
+    // console.log(item);
+    const itemDetail = document.getElementById("modal-body");
+
+    let showItem = Object.values(item);
+    showItem.forEach(element => {
+        console.log(element);
+        element.forEach(e => {
+            console.log(e);
+
+            itemDetail.innerHTML = `
+            <img class="card-img" src=${e.strDrinkThumb} alt=""/>
+            <h4>Id: ${e.idDrink}</h4>
+            <h3>Name: ${e.strDrink}</h3>
+            <h6>Alcoholic: ${e.strAlcoholic}</h6>
+            <h6>Category: ${e.strCategory}</h6>
+            <p>Instructions: ${e.strInstructions}</p>
+            `;
+
+        });
+    });
 };
 
 loadItems()
