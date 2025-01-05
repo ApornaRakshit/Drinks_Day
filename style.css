@@ -6,22 +6,17 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 16px;
     width: 100%;
     margin: auto;
     text-align: center;
 }
-.card{
-    border: 1px solid black;
-    padding-bottom: 3rem;
-    margin: 3rem;
-}
-
 
 .cart-container{
     width: 30%;
-    box-shadow: 4px 4px 8px black;
-    text-align: center;
+    box-shadow: 4px 4px 8px rgb(166, 194, 227);
+    text-align: center; 
+    color: rgb(85, 171, 218);
 }
 .orders{
     display: flex;
